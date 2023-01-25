@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 #if (UNITY_EDITOR)
 
@@ -7,6 +8,16 @@ using UnityEngine;
 
 public class Autotiler_SO : ScriptableObject
 {
+    [SerializeField]
+    List<Texture2D> tilemaps;
+
+    [SerializeField]
+    RuleTile ruleTileTemplate;
+
+    public void CreateRuleTiles()
+    {
+        Debug.Log("Button worked!");
+    }
 }
 
 #endif
