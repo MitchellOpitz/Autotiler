@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
 
 [CustomEditor(typeof(Autotiler_SO))]
 public class Autotiler_GUI : Editor
@@ -18,6 +17,7 @@ public class Autotiler_GUI : Editor
 
     public override void OnInspectorGUI()
     {
+        // Need to check Unity documentation.
         serializedObject.Update();
 
         // Header
@@ -45,6 +45,10 @@ public class Autotiler_GUI : Editor
         {
             script.CreateRuleTiles();
         }
+
+        // Need to check Unity documentation.
+        serializedObject.ApplyModifiedProperties();
+
     }
 
     private static void GUI_HorizontalLine()

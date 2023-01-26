@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 public class Autotiler_SO : ScriptableObject
 {
+
     [SerializeField]
     List<Texture2D> tilemaps;
 
