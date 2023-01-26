@@ -40,6 +40,10 @@ public class Autotiler_SO : ScriptableObject
         }
 
         Debug.Log("Successful!");
+
+        RuleTile newRuleTile = CreateInstance<RuleTile>();
+        EditorUtility.CopySerialized(ruleTileTemplate, newRuleTile);
+        AssetDatabase.CreateAsset(newRuleTile, AssetDatabase.GetAssetPath(this));
     }
 }
 
