@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor;
+using System.Linq;
 
 #if (UNITY_EDITOR)
 
@@ -17,7 +19,27 @@ public class Autotiler_SO : ScriptableObject
 
     public void CreateRuleTiles()
     {
-        Debug.Log("Button worked!");
+
+        // Check number of sprites matches the number of rules.
+        int numberOfRules = ruleTileTemplate.m_TilingRules.Count;
+
+        foreach (Texture2D tilemap in tilemaps)
+        {
+            string spriteSheetName = AssetDatabase.GetAssetPath(tilemap);
+            Sprite[] sprites = AssetDatabase.LoadAllAssetsAtPath(spriteSheetName).OfType<Sprite>().ToArray();
+            // Debug.Log("Sprite sheet: " + tilemap.name + " | Sprites contained: " + sprites.Length);
+
+            if (sprites.Length != numberOfRules)
+            {
+                Debug.LogError("Tilemap does not contain the number of sprites needed by Rule Tile template.");
+                Debug.LogError("Sprite sheet: " + tilemap.name + " | Sprites contained: " + sprites.Length);
+                Debug.LogError("Rule Tile template: " + ruleTileTemplate + " | Rules contained: " + numberOfRules);
+                return;
+            }
+
+        }
+
+        Debug.Log("Successful!");
     }
 }
 
