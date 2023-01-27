@@ -20,6 +20,9 @@ public class Autotiler_SO : ScriptableObject
     public void CreateRuleTiles()
     {
 
+        RuleTile newRuleTile = CreateInstance<RuleTile>();
+        EditorUtility.CopySerialized(ruleTileTemplate, newRuleTile);
+
         // Check number of sprites matches the number of rules.
         int numberOfRules = ruleTileTemplate.m_TilingRules.Count;
 
@@ -39,10 +42,31 @@ public class Autotiler_SO : ScriptableObject
 
         }
 
-        Debug.Log("Successful!");
+        if (tilemaps.Count == 1)
+        {
+            string spriteSheetName = AssetDatabase.GetAssetPath(tilemaps[0]);
+            Sprite[] sprites = AssetDatabase.LoadAllAssetsAtPath(spriteSheetName).OfType<Sprite>().ToArray();
 
-        RuleTile newRuleTile = CreateInstance<RuleTile>();
-        EditorUtility.CopySerialized(ruleTileTemplate, newRuleTile);
+            for (int i = 0; i < numberOfRules; i++)
+            {
+                newRuleTile.m_TilingRules[i].m_Sprites[0] = sprites[i];
+            }
+        } else
+        {
+            foreach (Texture2D tilemap in tilemaps)
+            {
+                int position = tilemaps.IndexOf(tilemap);
+                string spriteSheetName = AssetDatabase.GetAssetPath(tilemap);
+                Sprite[] sprites = AssetDatabase.LoadAllAssetsAtPath(spriteSheetName).OfType<Sprite>().ToArray();
+
+                for (int i = 0; i < numberOfRules; i++)
+                {
+                    newRuleTile.m_TilingRules[i].m_Sprites[position] = sprites[i];                    
+                }
+            }
+        }
+
+        Debug.Log("Successful!");
         AssetDatabase.CreateAsset(newRuleTile, AssetDatabase.GetAssetPath(this));
     }
 }
