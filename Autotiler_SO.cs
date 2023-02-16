@@ -48,7 +48,7 @@ public class Autotiler_SO : ScriptableObject
             return false;
         } else
         {
-            Debug.Log("Rule tile is assigned.");
+            // Debug.Log("Rule tile is assigned.");
             return true;
         }
     }
@@ -73,7 +73,7 @@ public class Autotiler_SO : ScriptableObject
             }
 
         }
-        Debug.Log("All tilemaps match provided Rule Tile.");
+        // Debug.Log("All tilemaps match provided Rule Tile.");
         return true;
     }
 
@@ -81,7 +81,7 @@ public class Autotiler_SO : ScriptableObject
     {
         newRuleTile = CreateInstance<RuleTile>();
         EditorUtility.CopySerialized(ruleTileTemplate, newRuleTile);
-        Debug.Log("Rule Tile duplicated.");
+        // Debug.Log("Rule Tile duplicated.");
     }
 
     private void SingleTilemap()
@@ -92,7 +92,7 @@ public class Autotiler_SO : ScriptableObject
         {
             rule.m_Output = RuleTile.TilingRule.OutputSprite.Single;
             rule.m_Sprites = new Sprite[] { rule.m_Sprites[0] };
-            Debug.Log("Converted Output rule to 'Single'.");
+            // Debug.Log("Converted Output rule to 'Single'.");
         }
 
         // Set all sprites to the Rule Tile.
@@ -101,23 +101,23 @@ public class Autotiler_SO : ScriptableObject
 
         for (int i = 0; i < numberOfRules; i++)
         {
-            Debug.Log("Sprite at position: " + i + " = " + sprites[i] + ".");
+            // Debug.Log("Sprite at position: " + i + " = " + sprites[i] + ".");
             newRuleTile.m_TilingRules[i].m_Sprites[0] = sprites[i];
         }
 
-        Debug.Log("Single tilemap created.");
+        // Debug.Log("Single tilemap created.");
     }
 
     private void RandomTilemaps()
     {
-        Debug.Log("Random Tilemaps started.");
+        // Debug.Log("Random Tilemaps started.");
 
         // Convert Tiling Rule Output to "Single".
         foreach (RuleTile.TilingRule rule in newRuleTile.m_TilingRules)
         {
             rule.m_Output = RuleTile.TilingRule.OutputSprite.Random;
             rule.m_Sprites = new Sprite[tilemaps.Count];
-            Debug.Log("Converted Output rule to 'Random' with size of " + tilemaps.Count + ".");
+            // Debug.Log("Converted Output rule to 'Random' with size of " + tilemaps.Count + ".");
         }
 
         for (int i = 0; i < tilemaps.Count; i++)
@@ -125,10 +125,6 @@ public class Autotiler_SO : ScriptableObject
             Texture2D tilemap = tilemaps[i];
             string spriteSheetName = AssetDatabase.GetAssetPath(tilemap);
             Sprite[] sprites = AssetDatabase.LoadAllAssetsAtPath(spriteSheetName).OfType<Sprite>().OrderBy(s => s.name).ToArray();
-            foreach (Sprite sprite in sprites)
-            {
-                Debug.Log(sprite);
-            }
             for (int j = 0; j < numberOfRules; j++)
             {
                 newRuleTile.m_TilingRules[j].m_Sprites[i] = sprites[j];
@@ -140,7 +136,7 @@ public class Autotiler_SO : ScriptableObject
     private void CreateAsset()
     {
         AssetDatabase.CreateAsset(newRuleTile, AssetDatabase.GetAssetPath(this));
-        Debug.Log("New Rule Tile asset created successfully.");
+        // Debug.Log("New Rule Tile asset created successfully.");
     }
 }
 
